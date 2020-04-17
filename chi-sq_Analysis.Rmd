@@ -1,0 +1,205 @@
+---
+title: "chi-sq"
+author: "Muhammad Harris Hashmi"
+date: "4/16/2020"
+output: html_document
+---
+
+```{r}
+lab=read.csv("LIPIDS.csv")
+```
+
+```{r}
+set.seed (3214)
+lab=read.table("LIPIDS.txt", sep="\t", header=T, na.strings=c
+("","NA"))
+```
+
+
+```{r}
+#Recode Triglycerides
+lab$Triglycerides[ lab$Triglycerides < 150 ] <- 0
+lab$Triglycerides[ lab$Triglycerides >= 150 ] <- 1
+
+
+```
+
+```{r}
+# Recode Cholesterol
+lab$Cholesterol[ lab$Cholesterol < 200 ] <- 0
+lab$Cholesterol[ lab$Cholesterol >= 200 ] <- 1
+
+```
+
+```{r}
+# Recode LDL
+lab$LDL[ lab$LDL < 100 ] <- 0
+lab$LDL[ lab$LDL >= 100 ] <- 1
+```
+
+#RECODE HDL
+```{r}
+lab$HDL[ lab$HDL >= 60 ] <- 0
+lab$HDL[ lab$HDL < 60 ] <- 1
+```
+
+```{r}
+Triglycerides.freq=table(lab$Triglycerides)
+Triglyceride.prop=prop.table(Triglycerides.freq)
+Triglycerides.table=cbind(Triglycerides.freq,Triglyceride.prop)
+colnames( Triglycerides.table)=c("Frequency","Percent")
+print(Triglycerides.table)
+```
+
+```{r}
+Cholesterol.freq=table(lab$Cholesterol)
+Cholesterol.prop=prop.table(Cholesterol.freq)
+Cholesterol.table=cbind(Cholesterol.freq,Cholesterol.prop)
+colnames( Cholesterol.table)=c("Frequency","Percent")
+print(Cholesterol.table)
+```
+
+
+
+
+
+```{r}
+LDL.freq=table(lab$LDL)
+LDL.prop=prop.table(LDL.freq)
+LDL.table=cbind(LDL.freq,LDL.prop)
+colnames(LDL.table)=c("Frequency","Percent")
+print(LDL.table)
+
+```
+
+```{r}
+HDL.freq=table(lab$HDL)
+HDL.prop=prop.table(HDL.freq)
+HDL.table=cbind(HDL.freq,HDL.prop)
+colnames(HDL.table)=c("Frequency","Percent")
+print(HDL.table)
+
+```
+
+```{r}
+TREATMENT.freq=table(lab$TREATMENT)
+TREATMENT.prop=prop.table(TREATMENT.freq)
+TREATMENT.table=cbind(TREATMENT.freq,HDL.prop)
+colnames(TREATMENT.table)=c("Frequency","Percent")
+print(TREATMENT.table)
+
+
+```
+
+#TRIGLYCERIDES
+
+```{r}
+table1= table(lab$TREATMENT,lab$Triglycerides)
+table1.1= addmargins (table1)
+print(table1.1)
+```
+
+```{r}
+table1.2=prop.table(table1)
+print(table1.2)
+```
+
+```{r}
+library(MASS)
+chisq.test(table1)
+```
+```{r}
+library(vcd)
+assocstats(table1)
+```
+
+
+#CHOLESTEROL
+```{r}
+table2= table(lab$TREATMENT,lab$Cholesterol)
+table2.1= addmargins (table2)
+print(table2.1)
+```
+```{r}
+table2.2=prop.table(table2)
+print(table2.2)
+```
+
+```{r}
+library(MASS)
+chisq.test(table2)
+```
+
+
+```{r}
+library(vcd)
+assocstats(table2)
+```
+
+#LDL
+
+```{r}
+table3= table(lab$TREATMENT,lab$LDL)
+table3.1= addmargins (table3)
+print(table3.1)
+```
+
+```{r}
+table3.2=prop.table(table3)
+print(table3.2)
+```
+
+```{r}
+library(MASS)
+chisq.test(table3)
+```
+
+```{r}
+library(vcd)
+assocstats(table3)
+```
+
+#LDL
+```{r}
+table4= table(lab$TREATMENT,lab$LDL)
+table4.1= addmargins (table4)
+print(table4.1)
+```
+```{r}
+table4.2=prop.table(table4)
+print(table4.2)
+```
+
+```{r}
+library(MASS)
+chisq.test(table4)
+```
+
+```{r}
+library(vcd)
+assocstats(table4)
+```
+
+#HDL
+
+```{r}
+table5= table(lab$TREATMENT,lab$HDL)
+table5.1= addmargins (table5)
+print(table5.1)
+```
+
+```{r}
+table5.2=prop.table(table5)
+print(table5.2)
+```
+
+```{r}
+library(MASS)
+chisq.test(table5)
+```
+
+```{r}
+library(vcd)
+assocstats(table5)
+```
+
